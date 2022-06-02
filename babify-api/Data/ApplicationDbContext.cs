@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using babify_api.Models.Authentication;
+using babify_api.Models.TimerActivity;
 
-namespace Snekaer_API.Data
+
+namespace babify_api.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, UserRole, int>
     {
@@ -10,6 +12,9 @@ namespace Snekaer_API.Data
         {
 
         }
+
+        public DbSet<ActivityModel> Activities { get; set; }
+
 
     }
 }

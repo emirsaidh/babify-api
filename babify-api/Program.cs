@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Snekaer_API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using babify_api.Models;
 using System.Text;
 using babify_api.Models.Authentication;
+using babify_api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
