@@ -17,7 +17,6 @@ namespace babify_api.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<UserRole> _roleManager;
         private readonly IConfiguration _configuration;
-
         public UserController(
             UserManager<ApplicationUser> userManager,
             RoleManager<UserRole> roleManager,
@@ -51,10 +50,11 @@ namespace babify_api.Controllers
                 var token = GetToken(authClaims);
 
                 return Ok(new
-                {
+                {   
+                    user.Id,
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo
-                });
+                });;
             }
             return Unauthorized();
         }
@@ -113,7 +113,6 @@ namespace babify_api.Controllers
         }
 
 
-
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
@@ -130,9 +129,6 @@ namespace babify_api.Controllers
         }
 
 
-
-
-
-
+        
     }
 }

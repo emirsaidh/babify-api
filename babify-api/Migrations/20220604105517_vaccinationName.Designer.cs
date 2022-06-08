@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using babify_api.Data;
 
@@ -11,9 +12,10 @@ using babify_api.Data;
 namespace babify_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220604105517_vaccinationName")]
+    partial class vaccinationName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,12 +163,6 @@ namespace babify_api.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("ParentId1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParentId2")
-                        .HasColumnType("int");
 
                     b.Property<string>("PhotoURL")
                         .HasColumnType("nvarchar(max)");

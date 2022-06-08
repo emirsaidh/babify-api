@@ -9,10 +9,11 @@ namespace babify_api.Models.TimerActivity
 
         [Key]
         public int ActivityId { get; set; }
+        public int BabyId { get; set; }
         public DateTime StartTime { get; set; }
-        public string Note { get; set; }
+        public string? Note { get; set; }
         [Column(TypeName = "nvarchar(20)")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
 
 

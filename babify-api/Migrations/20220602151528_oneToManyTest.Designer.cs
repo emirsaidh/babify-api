@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using babify_api.Data;
 
@@ -11,9 +12,10 @@ using babify_api.Data;
 namespace babify_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220602151528_oneToManyTest")]
+    partial class oneToManyTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,12 +164,6 @@ namespace babify_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("ParentId1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParentId2")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhotoURL")
                         .HasColumnType("nvarchar(max)");
 
@@ -186,9 +182,6 @@ namespace babify_api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActivityId"), 1L, 1);
-
-                    b.Property<int>("BabyId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -322,6 +315,9 @@ namespace babify_api.Migrations
                     b.Property<string>("Amount")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("BottleMilkActivity_Amount");
+
+                    b.Property<int>("BabyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BottleMilkType")
                         .HasColumnType("nvarchar(max)");
@@ -532,11 +528,13 @@ namespace babify_api.Migrations
 
             modelBuilder.Entity("babify_api.Models.Activity.BottleMilkActivity", b =>
                 {
-                    b.HasOne("babify_api.Models.Baby", null)
+                    b.HasOne("babify_api.Models.Baby", "Baby")
                         .WithMany("BottleMilkActivities")
                         .HasForeignKey("BabyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Baby");
                 });
 
             modelBuilder.Entity("babify_api.Models.Baby", b =>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using babify_api.Data;
 
@@ -11,9 +12,10 @@ using babify_api.Data;
 namespace babify_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220602140611_PostRequestsActivities")]
+    partial class PostRequestsActivities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace babify_api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ApplicationUserBaby", b =>
-                {
-                    b.Property<int>("BabiesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BabiesId", "ParentsId");
-
-                    b.HasIndex("ParentsId");
-
-                    b.ToTable("ApplicationUserBaby");
-                });
 
             modelBuilder.Entity("babify_api.Models.Authentication.ApplicationUser", b =>
                 {
@@ -144,41 +131,6 @@ namespace babify_api.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("babify_api.Models.Baby", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("BirthDay")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("ParentId1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParentId2")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhotoURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Babies");
-                });
-
             modelBuilder.Entity("babify_api.Models.TimerActivity.ActivityModel", b =>
                 {
                     b.Property<int>("ActivityId")
@@ -186,9 +138,6 @@ namespace babify_api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActivityId"), 1L, 1);
-
-                    b.Property<int>("BabyId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -320,13 +269,13 @@ namespace babify_api.Migrations
                     b.HasBaseType("babify_api.Models.TimerActivity.ActivityModel");
 
                     b.Property<string>("Amount")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("BottleMilkActivity_Amount");
 
                     b.Property<string>("BottleMilkType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("BabyId");
 
                     b.HasDiscriminator().HasValue("BottleMilkActivity");
                 });
@@ -464,21 +413,6 @@ namespace babify_api.Migrations
                     b.HasDiscriminator().HasValue("WalkActivity");
                 });
 
-            modelBuilder.Entity("ApplicationUserBaby", b =>
-                {
-                    b.HasOne("babify_api.Models.Baby", null)
-                        .WithMany()
-                        .HasForeignKey("BabiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("babify_api.Models.Authentication.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("ParentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("babify_api.Models.Authentication.UserRole", null)
@@ -528,20 +462,6 @@ namespace babify_api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("babify_api.Models.Activity.BottleMilkActivity", b =>
-                {
-                    b.HasOne("babify_api.Models.Baby", null)
-                        .WithMany("BottleMilkActivities")
-                        .HasForeignKey("BabyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("babify_api.Models.Baby", b =>
-                {
-                    b.Navigation("BottleMilkActivities");
                 });
 #pragma warning restore 612, 618
         }
