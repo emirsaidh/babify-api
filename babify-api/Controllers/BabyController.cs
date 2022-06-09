@@ -1,5 +1,6 @@
 ﻿using babify_api.Data;
 using babify_api.Models;
+using babify_api.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,13 +48,24 @@ namespace babify_api.Controllers
         [Route("add-baby")]
         public async Task<IActionResult> PostBaby(Baby baby)
         {
-            
             _db.Babies.Add(baby);
             await _db.SaveChangesAsync();
             return Ok(baby.Id);
         }
 
-
+        [Route("{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBaby(int id)
+        {
+            var babyToDelete = await _db.Babies.FindAsync(id);
+            if (babyToDelete == null)
+            {
+                return NotFound();
+            }
+            _db.Babies.Remove(babyToDelete);
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
 
 
 

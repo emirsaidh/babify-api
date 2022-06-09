@@ -157,6 +157,31 @@ namespace babify_api.Controllers
             return Ok(activityList);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> PutAsync(ActivityModel activity)
+        {
+            _db.Activities.Update(activity);
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
+
+
+        [Route("{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteActivity(int id)
+        {
+            var activityToDelete = await _db.Activities.FindAsync(id);
+            if (activityToDelete == null)
+            {
+                return NotFound();
+            }
+            _db.Activities.Remove(activityToDelete);
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
+
+
+
 
     }
 }
